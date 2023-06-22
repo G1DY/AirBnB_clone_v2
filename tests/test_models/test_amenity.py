@@ -2,6 +2,15 @@
 """ """
 from tests.test_models.test_base_model import test_basemodel
 from models.amenity import Amenity
+from models.base_model import BaseModel
+from datetime import datetime
+from time import sleep
+import inspect
+import pycodestyle
+import unittest
+from os import getenv
+from unittest.mock import patch
+storage_t = getenv("HBNB_TYPE_STORAGE")
 
 
 class test_Amenity(test_basemodel):
@@ -144,13 +153,13 @@ class TestAmenity(unittest.TestCase):
     def test_to_dict_values(self):
         """test that values in dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
-        amenity = Amenity()
-        new_dict = amenity.to_dict()
-        self.assertEqual(new_dict["__class__"], "Amenity")
-        self.assertEqual(type(new_dict["created_at"]), str)
-        self.assertEqual(type(new_dict["updated_at"]), str)
-        self.assertEqual(new_dict["created_at"], amenity.created_at.strftime(t_format))
-        self.assertEqual(new_dict["updated_at"], amenity.updated_at.strftime(t_format))
+        am = Amenity()
+        new_d = am.to_dict()
+        self.assertEqual(new_d["__class__"], "Amenity")
+        self.assertEqual(type(new_d["created_at"]), str)
+        self.assertEqual(type(new_d["updated_at"]), str)
+        self.assertEqual(new_d["created_at"], am.created_at.strftime(t_format))
+        self.assertEqual(new_d["updated_at"], am.updated_at.strftime(t_format))
 
     def test_str(self):
         """test that the str method has the correct output"""
