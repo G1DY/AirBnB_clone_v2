@@ -55,5 +55,42 @@ class TestCity(unittest.Testcase):
         except Exception:
             pass
 
-    def test_pep8_city(self):
-        """test 
+    def test_pep8_City(self):
+        """test pycodestyle"""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(['models/city.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
+
+    def test_checking_for_docstring_City(self):
+        """checking for docstring"""
+        self.assertIsNotNone(City.__doc__)
+
+    def test_attributes_City(self):
+        """check if City has attributes"""
+        self.assertTrue('id' in self.city.__dict__)
+        self.assertTrue('created_at' in self.city.__dict__)
+        self.assertTrue('updated_at' in self.city.__dict__)
+        self.assertTrue('state_id' in self.city.__dict__)
+        self.assertTrue('name' in self.city.__dict__)
+
+    def test_issubclass_City(self):
+        """Test if City is a subclass of BaseModel"""
+        self.assertTrue(issubclass(self.city.__class__, BaseModel), True)
+
+    def test_attribute_type_City(self):
+        """tests attributes types for class city"""
+        self.assertEqual(type(self.city.name), str)
+        self.assertEqual(type(self.city.state_id), str)
+
+    def test_save_City(self):
+        """test if the save function works"""
+        self.city.save()
+        self.assertNotEqual(self.city.Created_at, self.city.updated_at)
+
+    def test_to_dict_City(self):
+        """test if dictionary works"""
+        self.assertEqual('to dict' in dir(self.city), True)
+
+
+if __name__ == "__main__":
+    unittest.main()
