@@ -2,17 +2,24 @@
 """a fabricfile that generates .tgz archive"""
 from fabric.api import local
 from datetime import datetime
-from time import strftime
 
 
 def do_pack():
     """Generates tgz archive from contents of web_static folder"""
-    archive_path = strftime("%Y%m%d%H%M%S")
-    try:
-        local("mkdir -p versions")
-        local("tar -czvf versions/web_static_{}.tgz web_static/"
-              .format(archive_path))
+    now = datetime.now()
+    timestamp = now.strftime("%Y%m%d%H%M%S")
+    archive_path = "versions/web_static_{}.tgz".format(timestamp)
 
+    local("mkdir -p versions")
+    result = local("tar -czvf {} web_static".format(archive_path),
+                   capture=True)
+
+    if result.succeeded:
+        file_size_output = result.stdout
+        print(file_size_output)
+        file_size = result.stdout.split()[-2]
+        print("web_static packed: {} -> {}Bytes".format(archive_path,
+              file_size))
         return "versions/web_static_{}.tgz".format(archive_path)
-    except Exception as e:
+    else:
         return None
