@@ -6,14 +6,12 @@ from datetime import datetime
 
 def do_pack():
     """Generates tgz archive from contents of web_static folder"""
-    now = datetime.now()
-    timestamp = now.strftime("%Y%m%d%H%M%S")
-    archive_path = "versions/web_static_{}.tgz".format(timestamp)
+    archive_path = strftime("%Y%m%d%H%M%S")
+    try:
+        local("mkdir -p versions")
+        local("tar -czvf versions/web_static_{}.tgz web_static/"
+              .format(archive_path))
 
-    local("mkdir -p versions")
-    result = local("tar -czvf {} web_static".format(archive_path))
-
-    if result.succeeded:
         return "versions/web_static_{}.tgz".format(archive_path)
-    else:
+    except Exception as e:
         return None
