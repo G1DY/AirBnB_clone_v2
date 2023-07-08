@@ -2,11 +2,18 @@
 # setting up nginx servers for deployment of web_static
 set -x
 sudo apt-get -y update
-sudo apt-get -y nginx
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'ssh'
+sudo ufw allow 443
 
-mkdir -p /data/web_static/releases/test/
-mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/
+sudo mkdir -p /data/web_static/
+sudo mkdir -p /data/web_static/releases/
+sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
 
+sudo touch /data/web_static/releases/test/index.html
 echo "Best School" > /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
