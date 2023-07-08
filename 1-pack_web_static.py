@@ -26,9 +26,9 @@ def do_pack():
                 if len(file_info) >= 3:
                     file_size = file_info[2]
                 break
-        
         if file_size:
-            print("web_static packed: {} -> {}Bytes".format(archive_path, file_size))
+            print("web_static packed: {} -> {}Bytes".format(archive_path,
+                  file_size))
             print("List of files added to the archive:")
             print(file_size_output)
             return archive_path
