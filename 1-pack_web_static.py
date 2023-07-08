@@ -14,6 +14,6 @@ def do_pack():
     result = local("tar -czvf {} web_static".format(archive_path))
 
     if result.succeeded:
-        return archive_path
+        return "versions/web_static_{}.tgz".format(archive_path)
     else:
         return None
