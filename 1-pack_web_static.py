@@ -2,6 +2,7 @@
 """a fabricfile that generates .tgz archive"""
 from fabric.api import local
 from datetime import datetime
+from time import strftime
 
 
 def do_pack():
